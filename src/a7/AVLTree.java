@@ -13,11 +13,13 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         left = null;
         right = null;
         element = null;
+        height =0;
     }
     public AVLTree(T element) { //a non-empty AVL Tree
         left = new AVLTree <T>();
         right = new AVLTree <T>();
         element = element;
+        height = 1;
     }
 
     /**
@@ -53,7 +55,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          root.left = leftSide.right;
          leftSide.right = root;
 
-         //update the heights
+         //update the height field
          root.height = Math.max (root.left.height(),root.right.height())+1;
          leftSide.height =Math.max (leftSide.left.height(),leftSide.right.height())+1;
 
@@ -71,18 +73,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
 
     @Override
     public int height() {
-
-       return 1 + Math.max(left.height(),right.height());
-
-
-
-
-         if(!isEmpty()){
-             return size()-1;
-         }
-         return 0;
-
-
+        if(isEmpty() ==true ){
+            return 0;
+        }
+        return 1+ Math.max(left.height, right.height);
     }
 
     @Override
