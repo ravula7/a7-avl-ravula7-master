@@ -24,10 +24,17 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(isEmpty() == true){
             return 0;
         }
+        if(left == null){
+            return 0;
+        }
+        if(right == null){
+            return 0;
+        }
         return 1 + Math.max(left.height(), right.height());
     }
     @Override
     public SelfBalancingBST<T> insert(T element) {
+        int balanceFactor = 0;
         if (_element == null){
             new AVLTree<T>(element); //create a new non-empty tree with the element inserted
         }
@@ -38,9 +45,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             else if (element.compareTo(_element) < 0) { //recurse to the left because element is smaller
                 this.left.insert(element); //root.left = (AVLTree<T>) root.left.insert(element);
             }
+            balanceFactor = this.left.height() - this.right.height();
         }
         //check heights and re balance if necessary
-        int balanceFactor = this.left.height() - this.right.height();
+        //int balanceFactor = this.left.height() - this.right.height();
         //root.height = Math.max(root.left.height,root.right.height)+1;
         //int balanceFactor = root.left.height()-root.right.height();
 
