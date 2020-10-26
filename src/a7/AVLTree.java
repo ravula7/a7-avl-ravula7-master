@@ -10,16 +10,16 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
 
     // Your code for constructor here.
     public AVLTree() { //an empty AVL Tree
+        root = null;
         left = null;
         right = null;
-        element = null;
-        height =0;
+        //height = 0;
     }
     public AVLTree(T element) { //a non-empty AVL Tree
         left = new AVLTree <T>();
         right = new AVLTree <T>();
         element = element;
-        height = 1;
+       //height = 1;
     }
 
     /**
@@ -36,8 +36,8 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          rightSide.left=root; //puts the right side's left tree to the root (rotated left)
 
          //update the heights
-         root.height = Math.max (root.left.height(),root.right.height())+1;
-         rightSide.height =Math.max (rightSide.left.height(),rightSide.right.height())+1;
+         root.height = Math.max(root.left.height(),root.right.height())+1;
+         rightSide.height = Math.max(rightSide.left.height(),rightSide.right.height())+1;
 
          return rightSide;
      }
@@ -76,7 +76,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(isEmpty() ==true ){
             return 0;
         }
-        return 1+ Math.max(left.height, right.height);
+        return 1 + Math.max(left.height, right.height);
     }
 
     @Override
@@ -98,18 +98,22 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
     @Override
     public SelfBalancingBST<T> insert(T element) {
          if (root == null){
-             root.insert(element);
+             root = new AVLTree<>(element); //create a new non-empty tree with the element inserted
+             //all the heights for this new tree remain at 0
+             root.height = 0;
+             root.left.height = 0;
+             root.right.height = 0;
          }
          else {
             if (element.compareTo((T) root) >= 0) { //recurse to the right because element is larger or the same
-                root.right = (AVLTree) right.insert(element);
+                right = (AVLTree) right.insert(element);
             }
             else if (element.compareTo((T) root) < 0) { //recurse to the left because element is smaller
-                root.left = (AVLTree) left.insert(element);
+                left = (AVLTree) left.insert(element);
             }
-        }
-         //check heights and rebalance if necessary
-         root.height = Math.max(root.left.height(),root.right.height())+1;
+         }
+         //check heights and re balance if necessary
+         root.height = Math.max(root.left.height,root.right.height)+1;
          int balanceFactor = root.left.height()-root.right.height();
 
          if(balanceFactor < -1){ //right right or right left
@@ -125,7 +129,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          }
          else if(balanceFactor > 1){ //left left or left right
              //left left case - just rotate right
-             if(left.getLeft().height()<left.getRight().height()){ //root.getLeft().height() < root.getRight().height())
+             if(left.getLeft().height() < left.getRight().height()){ //root.getLeft().height() < root.getRight().height())
                     root = rotateRight();
              }
              //left right case - rotate left, then rotate right

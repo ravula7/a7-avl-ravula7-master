@@ -4,7 +4,17 @@ public class Main {
     public static void main(String[] args) {
 
         // Create a new empty tree.
-        SelfBalancingBST<Integer> avl_bst = new AVLTree<Integer>();
+        SelfBalancingBST<Integer> avl = new AVLTree<Integer>();
+        avl.insert(47);
+        avl.insert(52);
+        avl.insert(60);
+        avl.insert(3);
+        avl.insert(7);
+        avl.insert(10);
+        avl.insert(58);
+
+
+        /*
 
         // Insert 50 random integers.
         // Note how we need to capture the result of insert back into
@@ -26,5 +36,7 @@ public class Main {
         }
 
         System.out.println(avl_bst.height());
+
+         */
     }
 }
