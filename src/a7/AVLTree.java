@@ -24,12 +24,6 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(isEmpty() == true){
             return 0;
         }
-        if(left == null){
-            return 0;
-        }
-        if(right == null){
-            return 0;
-        }
         return 1 + Math.max(left.height(), right.height());
     }
     @Override
@@ -38,6 +32,18 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
           return true;
         }
         return false;
+    }
+    public int balanceFactor(){
+        if(left == null || left.isEmpty()){
+            return 0 - right.height();
+        }
+        if(right == null||right.isEmpty()){
+            return left.height()-0;
+        }
+        if(left.isEmpty() && right.isEmpty()){
+            return 0;
+        }
+            return left.height()-right.height();
     }
     @Override
     public SelfBalancingBST<T> insert(T element) {
@@ -63,7 +69,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
                 }
             }
         }
-        int balanceFactor = this.left.height() - this.right.height();
+       int balanceFactor = balanceFactor();
 
         if(balanceFactor < -1){ //right right or right left
             //right right case - just rotate left
@@ -150,9 +156,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          this.right = rightSide.left; //brings right's child up and sends it to the left
          rightSide.left=this; //puts the right side's left tree to the root (rotated left)
 
-         //update the heights
-         //root.height = Math.max(root.left.height(),root.right.height())+1;
-         //rightSide.height = Math.max(rightSide.left.height(),rightSide.right.height())+1;
+
          return rightSide;
      }
     
@@ -165,13 +169,9 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
      private AVLTree<T> rotateRight() {
          // You should implement right rotation and then use this 
          // method as needed when fixing imbalances.
-         AVLTree<T> leftSide = this.left;
-         this.left = leftSide.right;
-         leftSide.right = this;
-
-         //update the height field
-         //root.height = Math.max (root.left.height(),root.right.height())+1;
-         //leftSide.height =Math.max (leftSide.left.height(),leftSide.right.height())+1;
+             AVLTree<T> leftSide = this.left;
+             this.left = leftSide.right;
+             leftSide.right = this;
          return leftSide;
      }
 

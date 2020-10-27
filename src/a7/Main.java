@@ -13,7 +13,6 @@ public class Main {
         avl.insert(10);
         avl.insert(58);
 
-
         /*
 
         // Insert 50 random integers.
