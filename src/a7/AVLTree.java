@@ -45,6 +45,50 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         }
             return left.height()-right.height();
     }
+    public AVLTree rebalance(int balanceFactor) {
+        if (balanceFactor > 1) {
+            if (left.left.height() < left.right.height()) {
+                left = left.rotateLeft();
+            }
+            return rotateRight();
+        }
+        else {
+            if (right.left.height() > right.right.height()) {
+                right = right.rotateRight();
+            }
+            return rotateLeft();
+        }
+    }
+
+
+
+
+        /*if(balanceFactor < -1){ //right right or right left
+            //right right case - just rotate left
+            if(right.right.height()<right.left.height()){
+                right = right.rotateLeft();
+            }
+            //right left case - rotate right, then rotate left
+            else{
+                this.right = rotateRight();
+                right = right.rotateLeft();
+                // right = right.rotateLeft();
+            }
+        }
+        else if(balanceFactor > 1){ //left left or left right
+            //left left case - just rotate right
+            if(left.left.height() < left.right.height()){ //root.getLeft().height() < root.getRight().height())
+                left = left.rotateRight();
+            }
+            //left right case - rotate left, then rotate right
+            else{
+                this.left = rotateLeft();
+                left = left.rotateRight();
+            }
+        }
+         */
+
+
     @Override
     public SelfBalancingBST<T> insert(T element) {
         if(_element == null){
@@ -71,28 +115,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         }
        int balanceFactor = balanceFactor();
 
-        if(balanceFactor < -1){ //right right or right left
-            //right right case - just rotate left
-            if(right.getRight().height()<right.getLeft().height()){
-                right = right.rotateLeft();
-            }
-            //right left case - rotate right, then rotate left
-            else{
-                this.right = rotateRight();
-                right = right.rotateLeft();
-            }
+        if(balanceFactor <-1 || balanceFactor >1){
+        return rebalance(balanceFactor);
         }
-        else if(balanceFactor > 1){ //left left or left right
-            //left left case - just rotate right
-            if(left.getLeft().height() < left.getRight().height()){ //root.getLeft().height() < root.getRight().height())
-                left = left.rotateRight();
-            }
-            //left right case - rotate left, then rotate right
-            else{
-                this.left = rotateLeft();
-                left = left.rotateRight();
-            }
-        }
+
 
         /*
 
@@ -152,12 +178,22 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
      private AVLTree<T> rotateLeft() {
          // You should implement left rotation and then use this 
          // method as needed when fixing imbalances.
-         AVLTree<T> rightSide = this.right; //set the right tree (the root of this tree will move up to the parent's root)
-         this.right = rightSide.left; //brings right's child up and sends it to the left
-         rightSide.left=this; //puts the right side's left tree to the root (rotated left)
-
-
-         return rightSide;
+            AVLTree y = this;
+            AVLTree x = y.right;
+            AVLTree z = x.left;
+            x.left = y;
+            y.right = z;
+            return x;
+            /*
+            AVLTree<T> rightSide = this.right; //set the right tree (the root of this tree will move up to the parent's root)
+            this.right = rightSide.left; //brings right's child up and sends it to the left
+            rightSide.left=this;//puts the right side's left tree to the root (rotated left)
+            AVLTree <T> main = this;
+            AVLTree <T> rightSide = main.right;
+            AVLTree <T> leftSide = rightSide.left;
+            rightSide.left = main;
+            main.right = leftSide;
+          */
      }
     
     /**
@@ -169,10 +205,22 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
      private AVLTree<T> rotateRight() {
          // You should implement right rotation and then use this 
          // method as needed when fixing imbalances.
-             AVLTree<T> leftSide = this.left;
-             this.left = leftSide.right;
-             leftSide.right = this;
-         return leftSide;
+         AVLTree y = this;
+         AVLTree x = y.left;
+         AVLTree z = x.right;
+         x.right = y;
+         y.left = z;
+         return x;
+
+         /*AVLTree<T> leftSide = this.left;
+         this.left = leftSide.right;
+         leftSide.right = this;
+         AVLTree <T> main = this;
+         AVLTree <T> leftSide = main.left;
+         AVLTree <T> rightSide = leftSide.left;
+         leftSide.right = main;
+         main.left = rightSide;
+         return leftSide; */
      }
 
     // Your code for public methods here.
