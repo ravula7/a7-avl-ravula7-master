@@ -5,16 +5,29 @@ public class Main {
 
         // Create a new empty tree.
         SelfBalancingBST<Integer> avl = new AVLTree<Integer>();
-        avl.insert(47);
+        avl.insert(20);
+        avl.insert(11);
+        avl.insert(50);
+        avl.insert(4);
+        avl.insert(6);
+        avl.insert(15);
+        avl.insert(3);
+        avl.insert(16);
+        avl.insert(17);
+        avl.insert(2);
+        avl.remove(20);
+        avl.remove(4);
+        avl.remove(3);
+
+
+        /*
+ avl.insert(47);
         avl.insert(52);
         avl.insert(60);
         avl.insert(3);
         avl.insert(7);
         avl.insert(10);
         avl.insert(58);
-
-        /*
-
         // Insert 50 random integers.
         // Note how we need to capture the result of insert back into
         // the variable avl_bst because the post insertion root that is

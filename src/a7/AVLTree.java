@@ -244,11 +244,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
 
     @Override
     public SelfBalancingBST<T> remove(T element) {
-        if (isEmpty()) { //remove from empty tree
+         if (isEmpty()) { //remove from empty tree
             return this;
         }
         SelfBalancingBST<T> original = this;
-
         if (element.compareTo(getValue()) > 0) { //recurse to the right because element is larger
             right = (AVLTree<T>) right.remove(element);
         }
@@ -257,13 +256,13 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         }
         //different cases
         else{
-            if(left.isEmpty() && right.isEmpty()){ //no children
+            if(getLeft().isEmpty() && getRight().isEmpty()){ //no children
                 original = new AVLTree<T>();
             }
-            else if (left.isEmpty()){ //only right child
+            else if (getLeft().isEmpty()){ //only right child
                 original = getRight();
             }
-            else if (right.isEmpty()){ //only left child
+            else if (getRight().isEmpty()){ //only left child
                 original = getLeft();
             }
             else { //2 children so take last - right's min
