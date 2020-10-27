@@ -244,28 +244,46 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
 
     @Override
     public SelfBalancingBST<T> remove(T element) {
+        if (isEmpty()) { //remove from empty tree
+            return this;
+        }
+        AVLTree<T> original = this;
         if (element.compareTo((T) this) > 0) { //recurse to the right because element is larger
-            right = (AVLTree) right.remove(element);
+            right = (AVLTree<T>) right.remove(element);
+        } else if (element.compareTo((T) this) < 0) { //recurse to the left because element is smaller
+            left = (AVLTree<T>) left.remove(element);
         }
-        else if (element.compareTo((T) this) <0) { //recurse to the left because element is smaller
-            left = (AVLTree) left.remove(element);
+        //remove leaf --> has no children
+        else if (!left.isEmpty() && !right.isEmpty()) {
+            original = new AVLTree<T>();
         }
-        else if(left.isEmpty() && right.isEmpty()){
-           // EmptyBST<T> emptyTree = new EmptyBST<T>();
-            return null;
+        //remove when one child
+        //only right child exists
+        else if (getLeft().isEmpty()) {
+            original = (AVLTree<T>) getLeft();
         }
-        else if(!left.isEmpty() && right.isEmpty()){
+        //only left child exists
+        else if (getRight().isEmpty()) {
+            original = (AVLTree<T>) getRight();
+        }
+        //remove when two children exist
+        else if (!left.isEmpty() && !right.isEmpty()) {
+            T minimum = right.findMin(); //take the last
+            original = (AVLTree<T>) original.remove(minimum);
+            _element = minimum;
+
+         /*else if(left.isEmpty() && right.isEmpty()){
+             // EmptyBST<T> emptyTree = new EmptyBST<T>();
+             return null;
+         }
+         else if(!left.isEmpty() && right.isEmpty()){
             return left;
         }
         else if(left.isEmpty() && !right.isEmpty()){
             return right;
         }
-        else if (!left.isEmpty() && !right.isEmpty()){
-            T minimum = (T) right.findMin();
-            //root = (AVLTree) minimum;
-            right = (AVLTree) right.remove(minimum);
-        }
-        return this;
+          */
+        }return original;
     }
 
     @Override
