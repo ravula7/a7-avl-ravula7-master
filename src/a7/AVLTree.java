@@ -24,6 +24,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(isEmpty() == true){
             return 0;
         }
+        // TODO: null pointer exception here after printing height on a tree with just 20 in iy
         return 1 + Math.max(left.height(), right.height());
     }
     @Override
@@ -50,13 +51,17 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             if (left.left.height() < left.right.height()) {
                 left = left.rotateLeft();
             }
-            return rotateRight();
+            AVLTree<T> rightSide = this;
+            rightSide = rotateRight();
+            return rightSide;
         }
         else {
             if (right.left.height() > right.right.height()) {
                 right = right.rotateRight();
             }
-            return rotateLeft();
+            AVLTree<T> leftSide = this;
+            leftSide = rotateLeft();
+            return leftSide;
         }
     }
 

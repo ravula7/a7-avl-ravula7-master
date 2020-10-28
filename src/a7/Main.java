@@ -5,19 +5,36 @@ public class Main {
 
         // Create a new empty tree.
         SelfBalancingBST<Integer> avl = new AVLTree<Integer>();
+
         avl.insert(20);
+
         avl.insert(11);
+        //System.out.println(avl.height());
+
         avl.insert(50);
+        //System.out.println(avl.height());
+
         avl.insert(4);
-        avl.insert(6);
-        avl.insert(15);
-        avl.insert(3);
-        avl.insert(16);
-        avl.insert(17);
-        avl.insert(2);
-        avl.remove(20);
-        avl.remove(4);
-        avl.remove(3);
+        //System.out.println(avl.height());
+        avl = avl.insert(6);
+        //System.out.println(avl.height());
+
+        avl = avl.insert(15);
+        //System.out.println(avl.height());
+        avl = avl.insert(3);
+
+        //System.out.println(avl.height());
+        avl = avl.insert(16);
+
+        //System.out.println(avl.height());
+        avl = avl.insert(17);
+
+        //System.out.println(avl.height());
+        avl = avl.insert(2);
+
+        avl = avl.remove(20);
+        avl = avl.remove(4);
+        avl = avl.remove(3);
 
 
         /*
