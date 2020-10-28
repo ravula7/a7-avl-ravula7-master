@@ -273,6 +273,9 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
                 _element = minimum;
             }
         }
+        if(balanceFactor() <-1 || balanceFactor() >1){
+            return rebalance(balanceFactor());
+        }
         return this;
     }
 /*
