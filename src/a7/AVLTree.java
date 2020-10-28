@@ -22,7 +22,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
     @Override
     public int height() {
         if(isEmpty() == true){
-            return 0;
+            return -1;
         }
         // TODO: null pointer exception here after printing height on a tree with just 20 in iy
         return 1 + Math.max(left.height(), right.height());
@@ -47,6 +47,9 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         return left.height()-right.height();
     }
     public AVLTree rebalance(int balanceFactor) {
+        if(isEmpty()){
+            return this;
+        }
         if (balanceFactor > 1) {
             if (left.left.height() < left.right.height()) {
                 left = left.rotateLeft();
@@ -55,7 +58,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             rightSide = rotateRight();
             return rightSide;
         }
-        else {
+        else if(balanceFactor <-1) {
             if (right.left.height() > right.right.height()) {
                 right = right.rotateRight();
             }
@@ -63,6 +66,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             leftSide = rotateLeft();
             return leftSide;
         }
+        return this;
     }
 
 
@@ -184,8 +188,8 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         AVLTree y = this;
         AVLTree x = y.right;
         AVLTree z = x.left;
-        x.left = y;
         y.right = z;
+        x.left = y;
         return x;
             /*
             AVLTree<T> rightSide = this.right; //set the right tree (the root of this tree will move up to the parent's root)
@@ -211,8 +215,8 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         AVLTree y = this;
         AVLTree x = y.left;
         AVLTree z = x.right;
-        x.right = y;
         y.left = z;
+        x.right = y;
         return x;
 
          /*AVLTree<T> leftSide = this.left;
@@ -274,10 +278,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
                 T minimum = right.findMin(); //find successor
                 _element = minimum; //replace with successor
                 right = (AVLTree<T>) right.remove(minimum); //remove successor from its previous place
-                return this.rebalance(this.balanceFactor()); //re balance the tree if necessary
+
             }
         }
-        return this;
+        return this.rebalance(this.balanceFactor());
     }
 /*
         //remove leaf --> has no children
