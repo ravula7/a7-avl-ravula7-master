@@ -266,11 +266,10 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             else if (getRight().isEmpty() && !getLeft().isEmpty()){ //only left child
                 original = getLeft();
             }
-            else if(!getLeft().isEmpty() && !getRight().isEmpty()){ //2 children so take last - right's min
+            else { //2 children so take last - right's min
                 T minimum = getRight().findMin();
                 _element = minimum;
                 original = original.remove(minimum);
-
             }
         }
         return original;
