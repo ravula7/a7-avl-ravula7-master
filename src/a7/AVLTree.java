@@ -29,7 +29,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
     @Override
     public boolean isEmpty() {
         if(this._element == null) {
-          return true;
+            return true;
         }
         return false;
     }
@@ -43,7 +43,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(left.isEmpty() && right.isEmpty()){
             return 0;
         }
-            return left.height()-right.height();
+        return left.height()-right.height();
     }
     public AVLTree rebalance(int balanceFactor) {
         if (balanceFactor > 1) {
@@ -97,26 +97,26 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         }
         else {
             if(element.compareTo(_element)>=0){ //recurse right
-              if(right == null){ //if there is nothing in the right, create a new tree with this element
-                   right = new AVLTree<T>(element);
+                if(right == null){ //if there is nothing in the right, create a new tree with this element
+                    right = new AVLTree<T>(element);
                 }
                 else{ //if there is something in the right, call insert method again
                     right = (AVLTree<T>) right.insert(element);
                 }
             }
             else{ // in the other case, recurse left
-               if(left == null){ //nothing in the left --> create a new tree with this element
-                   left = new AVLTree<T>(element);
-               }
-              else { //if there is something in the left, call insert method again
+                if(left == null){ //nothing in the left --> create a new tree with this element
+                    left = new AVLTree<T>(element);
+                }
+                else { //if there is something in the left, call insert method again
                     left = (AVLTree<T>) left.insert(element);
                 }
             }
         }
-       int balanceFactor = balanceFactor();
+        int balanceFactor = balanceFactor();
 
         if(balanceFactor <-1 || balanceFactor >1){
-        return rebalance(balanceFactor);
+            return rebalance(balanceFactor);
         }
 
 
@@ -174,16 +174,16 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
      * Rotates the tree left and returns
      * AVLTree root for rotated result.
      */
-    
-     private AVLTree<T> rotateLeft() {
-         // You should implement left rotation and then use this 
-         // method as needed when fixing imbalances.
-            AVLTree y = this;
-            AVLTree x = y.right;
-            AVLTree z = x.left;
-            x.left = y;
-            y.right = z;
-            return x;
+
+    private AVLTree<T> rotateLeft() {
+        // You should implement left rotation and then use this
+        // method as needed when fixing imbalances.
+        AVLTree y = this;
+        AVLTree x = y.right;
+        AVLTree z = x.left;
+        x.left = y;
+        y.right = z;
+        return x;
             /*
             AVLTree<T> rightSide = this.right; //set the right tree (the root of this tree will move up to the parent's root)
             this.right = rightSide.left; //brings right's child up and sends it to the left
@@ -194,23 +194,23 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             rightSide.left = main;
             main.right = leftSide;
           */
-     }
-    
+    }
+
     /**
      *
      * Rotates the tree right and returns
      * AVLTree root for rotated result.
-     */ 
-     
-     private AVLTree<T> rotateRight() {
-         // You should implement right rotation and then use this 
-         // method as needed when fixing imbalances.
-         AVLTree y = this;
-         AVLTree x = y.left;
-         AVLTree z = x.right;
-         x.right = y;
-         y.left = z;
-         return x;
+     */
+
+    private AVLTree<T> rotateRight() {
+        // You should implement right rotation and then use this
+        // method as needed when fixing imbalances.
+        AVLTree y = this;
+        AVLTree x = y.left;
+        AVLTree z = x.right;
+        x.right = y;
+        y.left = z;
+        return x;
 
          /*AVLTree<T> leftSide = this.left;
          this.left = leftSide.right;
@@ -221,7 +221,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          leftSide.right = main;
          main.left = rightSide;
          return leftSide; */
-     }
+    }
 
     // Your code for public methods here.
 
@@ -245,7 +245,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
     @Override
     public SelfBalancingBST<T> remove(T element) {
 
-         if (isEmpty()) { //remove from empty tree
+        if (isEmpty()) { //remove from empty tree
             return this;
         }
         SelfBalancingBST<T> original = this;
@@ -255,18 +255,18 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         else if (element.compareTo(getValue()) < 0) { //recurse to the left because element is smaller
             left = (AVLTree<T>) left.remove(element);
         }
-        //different cases when the element is found (not > or < so no recursion again)
-        else{ //when element is found
+        //different cases
+        else{
             if(getLeft().isEmpty() && getRight().isEmpty()){ //no children
                 original = new AVLTree<T>();
             }
-            else if (getLeft().isEmpty()){ //only right child
+            else if (getLeft().isEmpty() && !getRight().isEmpty()){ //only right child
                 original = getRight();
             }
-            else if (getRight().isEmpty()){ //only left child
+            else if (getRight().isEmpty() && !getLeft().isEmpty()){ //only left child
                 original = getLeft();
             }
-            else { //2 children so take last - right's min
+            else if(!getLeft().isEmpty() && !getRight().isEmpty()){ //2 children so take last - right's min
                 T minimum = getRight().findMin();
                 original = original.remove(minimum);
                 _element = minimum;
