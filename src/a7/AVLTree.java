@@ -268,7 +268,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
             }
             else { //2 children so take last - right's min
                 T minimum = getRight().findMin();
-                original = original.remove(minimum);
+                right = (AVLTree<T>) right.remove(minimum);
                 _element = minimum;
             }
         }
