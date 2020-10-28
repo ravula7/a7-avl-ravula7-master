@@ -118,7 +118,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         if(balanceFactor <-1 || balanceFactor >1){
             return rebalance(balanceFactor);
         }
-
+        return this;
 
         /*
 
@@ -165,8 +165,6 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
          */
         //check heights and re balance if necessary
         //int balanceFactor = root.left.height()-root.right.height();
-
-        return this;
     }
 
     /**
@@ -271,7 +269,9 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
                 T minimum = getRight().findMin();
                 right = (AVLTree<T>) right.remove(minimum);
                 _element = minimum;
-                return rebalance(balanceFactor());
+                if(balanceFactor() >1 || balanceFactor() <-1) {
+                    return this.rebalance(balanceFactor());
+                }
             }
         }
         return this;
