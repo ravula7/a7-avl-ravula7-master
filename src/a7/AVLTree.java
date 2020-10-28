@@ -102,24 +102,30 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
     public SelfBalancingBST<T> insert(T element) {
         if(_element == null){
             _element = element;
-            return new AVLTree<T>(element);
+            left = new AVLTree<>();
+            right = new AVLTree<>();
+            //return new AVLTree<T>(element);
         }
         else {
             if(element.compareTo(_element)>=0){ //recurse right
-                if(right == null){ //if there is nothing in the right, create a new tree with this element
+                /*if(right == null){ //if there is nothing in the right, create a new tree with this element
                     right = new AVLTree<T>(element);
                 }
-                else{ //if there is something in the right, call insert method again
+
+                 */
+                 //if there is something in the right, call insert method again
                     right = (AVLTree<T>) right.insert(element);
-                }
+
             }
             else{ // in the other case, recurse left
-                if(left == null){ //nothing in the left --> create a new tree with this element
+                /*if(left == null){ //nothing in the left --> create a new tree with this element
                     left = new AVLTree<T>(element);
                 }
-                else { //if there is something in the left, call insert method again
+
+                 */
+                 //if there is something in the left, call insert method again
                     left = (AVLTree<T>) left.insert(element);
-                }
+
             }
         }
         int balanceFactor = balanceFactor();
