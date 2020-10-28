@@ -273,7 +273,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
                 _element = minimum;
             }
         }
-        return rebalance(balanceFactor());
+        return this;
     }
 /*
         //remove leaf --> has no children
