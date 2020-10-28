@@ -258,7 +258,7 @@ public class AVLTree<T extends Comparable<T>> implements SelfBalancingBST<T> {
         //different cases
         else{
             if(getLeft().isEmpty() && getRight().isEmpty()){ //no children
-                original = new AVLTree<T>(_element);
+                original = new AVLTree<T>();
             }
             else if (getLeft().isEmpty()){ //only right child
                 original = getRight();
